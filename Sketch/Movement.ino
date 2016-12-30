@@ -3,9 +3,9 @@ MC33887 m2(10, 40, 42);//(pwd, en1, en2)
 MC33887 m3(11, 30, 32);//(pwd, en1, en2)
 Triskar triskar(m1, m2, m3);
 
-int enableMotorsPin = 46;
-int enableMotorsPin2 = 36;
-int enableMotorsPin3 = 26;
+const uint8_t ENABLE_MOTORS_PIN1 = 46;
+const uint8_t ENABLE_MOTORS_PIN2 = 36;
+const uint8_t ENABLE_MOTORS_PIN3 = 26;
 
 void movementInit() {
   pinMode(9, OUTPUT);
@@ -17,28 +17,28 @@ void movementInit() {
   pinMode(11, OUTPUT);
   pinMode(30, OUTPUT);
   pinMode(32, OUTPUT);
-  pinMode(enableMotorsPin, OUTPUT);
-  pinMode(enableMotorsPin2, OUTPUT);
-  pinMode(enableMotorsPin3, OUTPUT);
+  pinMode(ENABLE_MOTORS_PIN1, OUTPUT);
+  pinMode(ENABLE_MOTORS_PIN2, OUTPUT);
+  pinMode(ENABLE_MOTORS_PIN3, OUTPUT);
 }
 
 void Stop() {
   triskar.run(0, 0, 0);
   triskar.stop();
-  digitalWrite(enableMotorsPin, LOW);// disattiva motori
-  digitalWrite(enableMotorsPin2, LOW);
-  digitalWrite(enableMotorsPin3, LOW);
+  digitalWrite(ENABLE_MOTORS_PIN1, LOW);// disattiva motori
+  digitalWrite(ENABLE_MOTORS_PIN2, LOW);
+  digitalWrite(ENABLE_MOTORS_PIN3, LOW);
 
   isTeoMoving = false;
 }
 
 //G strafe forward angularSpeed
-void Go(int x, int y, int z) {
+void Go(uint8_t x, uint8_t y, uint8_t z) {
 
   triskar.run(x, y, z);//velocità di Spostamento laterale, velocità di avanzamento, velocità angolare
-  digitalWrite(enableMotorsPin, HIGH);// disattiva motori
-  digitalWrite(enableMotorsPin2, HIGH);
-  digitalWrite(enableMotorsPin3, HIGH);
+  digitalWrite(ENABLE_MOTORS_PIN1, HIGH);// disattiva motori
+  digitalWrite(ENABLE_MOTORS_PIN2, HIGH);
+  digitalWrite(ENABLE_MOTORS_PIN3, HIGH);
 
   if (x == 0 && y == 0 && z == 0)
     isTeoMoving = false;

@@ -1,5 +1,5 @@
 //Led matrix - eyelashes
-const short idleEyelashes[24][2] = {
+const uint8_t idleEyelashes[24][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {4,4},{4,5},
   {5,6},{6,6},{7,6},{8,6},{9,6},
@@ -9,7 +9,7 @@ const short idleEyelashes[24][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short happyCenterEyelashes[32][2] = {
+const uint8_t happyCenterEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -19,7 +19,7 @@ const short happyCenterEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short happyLeftEyelashes[32][2] = {
+const uint8_t happyLeftEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -29,7 +29,7 @@ const short happyLeftEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short happyRightEyelashes[32][2] = {
+const uint8_t happyRightEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -39,7 +39,7 @@ const short happyRightEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short happyClosedEyelashes[36][2] = {
+const uint8_t happyClosedEyelashes[36][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -51,7 +51,7 @@ const short happyClosedEyelashes[36][2] = {
   {9,11},{9,10}
 };
 
-const short sadCenterEyelashes[30][2] = {
+const uint8_t sadCenterEyelashes[30][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {4,4},{3,5},
   {2,6},{3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -61,7 +61,7 @@ const short sadCenterEyelashes[30][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short sadLeftEyelashes[30][2] = {
+const uint8_t sadLeftEyelashes[30][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {4,4},{3,5},
   {2,6},{3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -71,7 +71,7 @@ const short sadLeftEyelashes[30][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short sadRightEyelashes[30][2] = {
+const uint8_t sadRightEyelashes[30][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {4,4},{3,5},
   {2,6},{3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -80,7 +80,8 @@ const short sadRightEyelashes[30][2] = {
   {3,10},{4,11},
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
-const short sadClosedEyelashes[34][2] = {
+
+const uint8_t sadClosedEyelashes[34][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {4,4},{3,5},
   {2,6},{3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -92,7 +93,7 @@ const short sadClosedEyelashes[34][2] = {
   {9,11},{9,10}
 };
 
-const short angryCenterEyelashes[24][2] = {
+const uint8_t angryCenterEyelashes[24][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {3,2},{4,3},{5,4},{6,5},
   {7,6},{8,6},{9,6},
@@ -102,7 +103,7 @@ const short angryCenterEyelashes[24][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short angryLeftEyelashes[24][2] = {
+const uint8_t angryLeftEyelashes[24][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {3,2},{4,3},{5,4},{6,5},
   {7,6},{8,6},{9,6},
@@ -112,7 +113,7 @@ const short angryLeftEyelashes[24][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short angryRightEyelashes[24][2] = {
+const uint8_t angryRightEyelashes[24][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {3,2},{4,3},{5,4},{6,5},
   {7,6},{8,6},{9,6},
@@ -122,7 +123,7 @@ const short angryRightEyelashes[24][2] = {
   {5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short angryClosedEyelashes[28][2] = {
+const uint8_t angryClosedEyelashes[28][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},
   {3,2},{4,3},{5,4},{6,5},
   {7,6},{8,6},{9,6},
@@ -134,7 +135,7 @@ const short angryClosedEyelashes[28][2] = {
   {9,11},{9,10}
 };
 
-const short scaredCenterEyelashes[32][2] = {
+const uint8_t scaredCenterEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -144,7 +145,7 @@ const short scaredCenterEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short scaredLeftEyelashes[32][2] = {
+const uint8_t scaredLeftEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -154,7 +155,7 @@ const short scaredLeftEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short scaredRightEyelashes[32][2] = {
+const uint8_t scaredRightEyelashes[32][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},
@@ -164,7 +165,7 @@ const short scaredRightEyelashes[32][2] = {
   {3,12},{4,12},{5,12},{6,12},{7,12},{8,12},{9,12}
 };
 
-const short scaredClosedEyelashes[36][2] = {
+const uint8_t scaredClosedEyelashes[36][2] = {
   {9,3},{8,3},{7,3},{6,3},{5,3},{4,3},{3,3},
   {2,4},{2,5},
   {3,6},{4,6},{5,6},{6,6},{7,6},{8,6},{9,6},

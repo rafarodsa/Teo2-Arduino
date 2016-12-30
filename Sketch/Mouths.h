@@ -1,81 +1,80 @@
 //Led matrix - mouths
-const short idleMouth[8][2] = {
+const uint8_t idleMouth[8][2] = {
   {13,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{13,11}
 };
 
-const short happyCenterMouth[10][2] = {
+const uint8_t happyCenterMouth[10][2] = {
   {11,3},{12,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{12,11},{11,12}
 };
 
-const short happyLeftMouth[10][2] = {
+const uint8_t happyLeftMouth[10][2] = {
   {11,3},{12,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{12,11},{11,12}
 };
 
-const short happyRightMouth[10][2] = {
+const uint8_t happyRightMouth[10][2] = {
   {11,3},{12,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{12,11},{11,12}
 };
 
-const short happyClosedMouth[10][2] = {
+const uint8_t happyClosedMouth[10][2] = {
   {11,3},{12,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{12,11},{11,12}
 };
 
-const short sadCenterMouth[10][2] = {
+const uint8_t sadCenterMouth[10][2] = {
   {15,3},{14,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{14,11},{15,12}
 };
 
-const short sadLeftMouth[10][2] = {
+const uint8_t sadLeftMouth[10][2] = {
   {15,3},{14,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{14,11},{15,12}
 };
 
-const short sadRightMouth[10][2] = {
+const uint8_t sadRightMouth[10][2] = {
   {15,3},{14,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{14,11},{15,12}
 };
 
-const short sadClosedMouth[10][2] = {
+const uint8_t sadClosedMouth[10][2] = {
   {15,3},{14,4},{13,5},{13,6},{13,7},{13,8},{13,9},{13,10},{14,11},{15,12}
 };
 
-const short angryCenterMouth[8][2] = {
+const uint8_t angryCenterMouth[8][2] = {
   {15,4},{14,5},{13,6},{13,7},{13,8},{13,9},{14,10},{15,11}
 };
 
-const short angryLeftMouth[8][2] = {
+const uint8_t angryLeftMouth[8][2] = {
   {15,4},{14,5},{13,6},{13,7},{13,8},{13,9},{14,10},{15,11}
 };
 
-const short angryRightMouth[8][2] = {
+const uint8_t angryRightMouth[8][2] = {
   {15,4},{14,5},{13,6},{13,7},{13,8},{13,9},{14,10},{15,11}
 };
 
-const short angryClosedMouth[8][2] = {
+const uint8_t angryClosedMouth[8][2] = {
   {15,4},{14,5},{13,6},{13,7},{13,8},{13,9},{14,10},{15,11}
 };
 
-const short scaredCenterMouth[16][2] = {
+const uint8_t scaredCenterMouth[16][2] = {
   {11,5},{11,6},{11,7},{11,8},{11,9},{11,10},
   {12,10},{13,10},
   {14,10},{14,9},{14,8},{14,7},{14,6},{14,5},
   {13,5},{12,5}
 };
 
-const short scaredLeftMouth[16][2] = {
+const uint8_t scaredLeftMouth[16][2] = {
   {11,5},{11,6},{11,7},{11,8},{11,9},{11,10},
   {12,10},{13,10},
   {14,10},{14,9},{14,8},{14,7},{14,6},{14,5},
   {13,5},{12,5}
 };
 
-const short scaredRightMouth[16][2] = {
+const uint8_t scaredRightMouth[16][2] = {
   {11,5},{11,6},{11,7},{11,8},{11,9},{11,10},
   {12,10},{13,10},
   {14,10},{14,9},{14,8},{14,7},{14,6},{14,5},
   {13,5},{12,5}
 };
 
-const short scaredClosedMouth[16][2] = {
+const uint8_t scaredClosedMouth[16][2] = {
   {11,5},{11,6},{11,7},{11,8},{11,9},{11,10},
   {12,10},{13,10},
   {14,10},{14,9},{14,8},{14,7},{14,6},{14,5},
   {13,5},{12,5}
 };
-

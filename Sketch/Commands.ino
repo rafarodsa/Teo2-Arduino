@@ -8,7 +8,7 @@ SerialCommand CommandHandler(BTSerial);
 //Initialization
 void serialCommInit() {
   Serial.begin(9600);
-  Serial.println("Init!");
+  Serial.println(F("Init!"));
 }
 
 void BTCommInit() {
@@ -22,17 +22,17 @@ void BTCommInit() {
 
   CommandHandler.addDefaultHandler(unrecognized);
 #ifdef BTDEBUG
-  BTSerial.println("Init!");
+  BTSerial.println(F("Init!");
 #endif
 }
 
 void ready() {
-  BTSerial.println("ready");
+  BTSerial.println(F("ready"));
 }
 
 //Update call
 void listenCommand() {
-  int i;
+  uint8_t i;
   char buf[32];
   CommandHandler.readSerial();
 }
@@ -41,10 +41,10 @@ void listenCommand() {
 void moveHandler() {
   char* args;
   float params[3];
-  int i, j;
+  uint8_t i, j;
 
 #ifdef BTDEBUG
-  BTSerial.print("move ");
+  BTSerial.pruint8_t(F("move "));
 #endif
 
   for (i = 0, j = 0; i < 3; i++) {
@@ -54,15 +54,15 @@ void moveHandler() {
       j++;
 
 #ifdef BTDEBUG
-      BTSerial.print(args);
-      BTSerial.print(" ");
+      BTSerial.pruint8_t(args);
+      BTSerial.pruint8_t(F(" "));
 #endif
 
     }
 
 #ifdef BTDEBUG
     else {
-      BTSerial.print(" NULL");
+      BTSerial.pruint8_t(F(" NULL"));
     }
 #endif
   }
@@ -71,52 +71,52 @@ void moveHandler() {
 
     Go(params[0], params[1], params[2]);
 #ifdef BTDEBUG
-    BTSerial.println("Moving...");
+    BTSerial.println(F("Moving..."));
     delay(500);
     Stop();
-    BTSerial.println("Stopped!");
+    BTSerial.println(F("Stopped!"));
 #endif
   }
 }
 
 void setIdleMood() {
 #ifdef BTDEBUG
-  BTSerial.println("Mood changing to idle...");
+  BTSerial.println(F("Mood changing to idle..."));
 #endif
   moodState = idle;
 }
 
 void setHappyMood() {
 #ifdef BTDEBUG
-  BTSerial.println("Mood changing to happy...");
+  BTSerial.println(F("Mood changing to happy..."));
 #endif
   moodState = happy;
 }
 
 void setSadMood() {
 #ifdef BTDEBUG
-  BTSerial.println("Mood changing to sad...");
+  BTSerial.println(F("Mood changing to sad..."));
 #endif
   moodState = sad;
 }
 
 void setAngryMood() {
 #ifdef BTDEBUG
-  BTSerial.println("Mood changing to angry...");
+  BTSerial.println(F("Mood changing to angry..."));
 #endif
   moodState = angry;
 }
 
 void setScaredMood() {
 #ifdef BTDEBUG
-  BTSerial.println("Mood changing to scared...");
+  BTSerial.println(F("Mood changing to scared..."));
 #endif
   moodState = scared;
 }
 
 void unrecognized() {
 #ifdef BTDEBUG
-  BTSerial.println("Command not recognized");
+  BTSerial.println(F("Command not recognized"));
 #endif
   return;
 }
