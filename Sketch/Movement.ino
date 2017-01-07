@@ -33,15 +33,19 @@ void Stop() {
 }
 
 //G strafe forward angularSpeed
-void Go(uint8_t x, uint8_t y, uint8_t z) {
+void Go(uint8_t strafe, uint8_t forward, uint8_t angular) {
 
-  triskar.run(x, y, z);//velocità di Spostamento laterale, velocità di avanzamento, velocità angolare
+  triskar.run((float)strafe, (float)forward, (float)angular);//velocità di Spostamento laterale, velocità di avanzamento, velocità angolare
   digitalWrite(ENABLE_MOTORS_PIN1, HIGH);// disattiva motori
   digitalWrite(ENABLE_MOTORS_PIN2, HIGH);
   digitalWrite(ENABLE_MOTORS_PIN3, HIGH);
 
-  if (x == 0 && y == 0 && z == 0)
+  if (strafe == 0 && forward == 0 && angular == 0)
     isTeoMoving = false;
   else
     isTeoMoving = true;
 }
+
+boolean isMoving() {
+        return isTeoMoving;
+    }
