@@ -79,3 +79,97 @@ void moveLateral_wait(float distance) {
 //===================== NON-BLOCKING METHODS ==========================
 
 int wheel1_ticks = 0, wheel2_ticks = 0, wheel3_ticks = 0;
+boolean commanded = false;
+
+void refreshPositionControl() {
+        boolean w1 = false, w2 = false, w3 = false;
+        
+        if(!commanded) return;
+
+        if (wheel1_ticks != 0) {
+            if ((wheel1_ticks - enc1.read()) < _TOLERANCE) {
+                    wheel1_ticks = 0;
+                    w1 = true;
+                }  
+        }
+        else 
+            w1 = true;
+
+        if (wheel2_ticks != 0) {
+            if ((wheel2_ticks - enc2.read()) < _TOLERANCE) {
+                    wheel1_ticks = 0;
+                    w2 = true;
+                }  
+        }
+        else 
+            w2 = true;
+
+        if (wheel3_ticks != 0) {
+            if ((wheel3_ticks - enc3.read()) < _TOLERANCE) {
+                    wheel3_ticks = 0;
+                    w3 = true;
+                }  
+        }
+        else 
+            w3 = true;
+
+        if (w1 && w2 && w3) {
+                Stop();
+                commanded = false;
+            }
+    }
+
+
+void rotate (float angle) {
+        uint8_t _speed = angle > 0? -3:3;
+        
+        if (commanded) return;
+
+        wheel1_ticks = (int)((-_L/_R)*(angle*_TICKS_REV/360));
+        wheel2_ticks = wheel1_ticks;
+        wheel3_ticks = wheel1_ticks;
+        
+        enc1.write(0);
+        enc2.write(0);
+        enc3.write(0);
+
+        Go(0,0,_speed);
+
+        commanded = true;
+    }
+
+void moveAhead(float distance) {
+        uint8_t _speed = distance > 0? -1:1;
+        
+        if (commanded) return;
+        
+        wheel1_ticks = (int)((-_C30/_R)*distance*(_TICKS_REV/_2PI));
+        wheel2_ticks = (int)((_C30/_R)*distance*(_TICKS_REV/_2PI));
+        wheel3_ticks = 0;
+        
+        enc1.write(0);
+        enc2.write(0);
+        enc3.write(0);
+
+        Go (0,_speed,0);
+
+        commanded = true;
+    }
+
+void moveLateral(float distance) {
+    
+        uint8_t _speed = distance > 0? 1:-1;
+        
+        if (commanded) return;
+        
+        wheel1_ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
+        wheel2_ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
+        wheel3_ticks = (int)((-1/_R)*distance*(_TICKS_REV/_2PI));
+        
+        enc1.write(0);
+        enc2.write(0);
+        enc3.write(0);
+
+        Go (_speed,0,0);
+        commanded = true;
+    }
