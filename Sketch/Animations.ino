@@ -166,7 +166,7 @@ void animateHappyStrips() {
 #ifdef BTDEBUG
     BTSerial.println(F("Strips animation...");
 #endif
-    if (isTeoMoving == true) {
+    if (isMoving()) {
       drawFixedStrips();
     }
     else {
@@ -180,7 +180,7 @@ void animateSadStrips() {
 #ifdef BTDEBUG
     BTSerial.println(F("Strips animation...");
 #endif
-    if (isTeoMoving == true) {
+    if (isMoving()) {
       drawFixedStrips();
     }
     else {
@@ -194,7 +194,7 @@ void animateAngryStrips() {
 #ifdef BTDEBUG
     BTSerial.println(F("Strips animation...");
 #endif
-    if (isTeoMoving == true) {
+    if (isMoving()) {
       drawFixedStrips();
     }
     else {
@@ -208,7 +208,7 @@ void animateScaredStrips() {
 #ifdef BTDEBUG
     BTSerial.println(F("Strips animation...");
 #endif
-    if (isTeoMoving == true) {
+    if (isMoving()) {
       drawFixedStrips();
     }
     else {

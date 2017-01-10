@@ -42,7 +42,7 @@ enum MoodStateEnum {
 };
 MoodStateEnum moodState = idle;
 
-boolean isTeoMoving = false;
+
 
 void setup() {
   movementInit();
@@ -62,8 +62,16 @@ void setup() {
   timer.every(500, animateAngryStrips);
   timer.every(500, animateScaredStrips);
   timer.every(2000, ready);
+
+  positionControlInit();
 }
 
 void loop() {
   timer.update();
+  while (positionCommanded()) {
+    refreshPositionControl();
+  }
+  delay(2000);
+  rotate(360);
+
 }

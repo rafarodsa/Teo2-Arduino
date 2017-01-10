@@ -7,6 +7,8 @@ const uint8_t ENABLE_MOTORS_PIN1 = 46;
 const uint8_t ENABLE_MOTORS_PIN2 = 36;
 const uint8_t ENABLE_MOTORS_PIN3 = 26;
 
+boolean isTeoMoving = false;
+
 void movementInit() {
   pinMode(9, OUTPUT);
   pinMode(50, OUTPUT);
@@ -33,9 +35,9 @@ void Stop() {
 }
 
 //G strafe forward angularSpeed
-void Go(uint8_t strafe, uint8_t forward, uint8_t angular) {
+void Go(float strafe, float forward, float angular) {
 
-  triskar.run((float)strafe, (float)forward, (float)angular);//velocità di Spostamento laterale, velocità di avanzamento, velocità angolare
+  triskar.run(strafe, forward, angular);//velocità di Spostamento laterale, velocità di avanzamento, velocità angolare
   digitalWrite(ENABLE_MOTORS_PIN1, HIGH);// disattiva motori
   digitalWrite(ENABLE_MOTORS_PIN2, HIGH);
   digitalWrite(ENABLE_MOTORS_PIN3, HIGH);
