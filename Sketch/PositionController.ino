@@ -79,7 +79,7 @@ void moveLateral_wait(float distance) {     // positive distance is movement to 
 
 //===================== NON-BLOCKING METHODS ==========================
 /*
-    When a method is used to command a new position, the "refresPositionControl" method 
+    When a method is used to command a new position, the "refreshPositionControl" method 
     must be used to poll the position of Teo and to ensure that it stops when the commanded
     new position is reached. If not done, Teo will continue to move indefinitely.
 */
@@ -111,26 +111,20 @@ void refreshPositionControl() {
         boolean w1 = false, w2 = false, w3 = false;
         
         if(!commanded) return;
-        
-        Serial.println("Refreshig...");
-        
+       
         wheel1.ticks -= enc1.read();
         enc1.write(0);
-        Serial.println(wheel1.ticks);
-        Serial.println(wheel1.sign);
-        Serial.println(sign(wheel1.ticks));
+
         if (sign(wheel1.ticks) != wheel1.sign)
             w1 = true;
             
         wheel2.ticks -= enc2.read();
         enc2.write(0);
-        Serial.println(wheel2.ticks);
         if (sign(wheel2.ticks) != wheel2.sign)
             w2 = true;
 
         wheel3.ticks -= enc3.read();
         enc3.write(0);
-        Serial.println(wheel3.ticks);
         if (sign(wheel3.ticks) != wheel3.sign)
             w3 = true;
 
