@@ -78,7 +78,11 @@ void moveLateral_wait(float distance) {     // positive distance is movement to 
 
 
 //===================== NON-BLOCKING METHODS ==========================
-
+/*
+    When a method is used to command a new position, the "refresPositionControl" method 
+    must be used to poll the position of Teo and to ensure that it stops when the commanded
+    new position is reached. If not done, Teo will continue to move indefinitely.
+*/
 typedef struct {
         int ticks;
         int8_t sign;
