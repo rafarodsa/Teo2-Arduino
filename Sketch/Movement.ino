@@ -25,11 +25,13 @@ void movementInit() {
 }
 
 void Stop() {
-  triskar.run(0, 0, 0);
-  triskar.stop();
+  
   digitalWrite(ENABLE_MOTORS_PIN1, LOW);// disattiva motori
   digitalWrite(ENABLE_MOTORS_PIN2, LOW);
   digitalWrite(ENABLE_MOTORS_PIN3, LOW);
+  triskar.run(0, 0, 0);
+  triskar.stop();
+  
 
   isTeoMoving = false;
 }

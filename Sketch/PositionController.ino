@@ -1,13 +1,13 @@
 #include <Encoder.h>
 
 #define _L        (0.175f)    // Wheel distance from body origin [m]
-#define _R         0.035f    // Wheel radius [m]
+#define _R        (0.035f)    // Wheel radius [m]
 
 #define _C60    (0.500000000f)   // cos(60°) 
 #define _C30    (0.866025404f)   // cos(30°)
 #define _2PI     (6.283185307f)
 #define _TICKS_REV (1632.67f)
-#define _TOLERANCE  20
+#define _TOLERANCE  100
 
 #define WHEEL1Y_PIN 2
 #define WHEEL1W_PIN 3
@@ -15,6 +15,7 @@
 #define WHEEL2W_PIN 44
 #define WHEEL3Y_PIN 19
 #define WHEEL3W_PIN 34
+
 
 Encoder enc1(WHEEL1Y_PIN,WHEEL1W_PIN);
 Encoder enc2(WHEEL2Y_PIN,WHEEL2W_PIN);
@@ -78,14 +79,28 @@ void moveLateral_wait(float distance) {     // positive distance is movement to 
 
 //===================== NON-BLOCKING METHODS ==========================
 
-int wheel1_ticks = 0, wheel2_ticks = 0, wheel3_ticks = 0;
-boolean commanded = false;
+typedef struct {
+        int ticks;
+        int8_t sign;
+} WheelTicks;
+
+
+WheelTicks wheel1, wheel2, wheel3;
+
+enum typeCommandEnum {
+        none, rotation, forward, lateral
+    };
+    
+ typeCommandEnum commanded = none;
 
 void positionControlInit() {
-        commanded = false;
-        wheel1_ticks = 0;
-        wheel2_ticks = 0;
-        wheel3_ticks = 0;
+        commanded = none;
+        wheel1.ticks = 0;
+        wheel1.sign = 0;
+        wheel2.ticks = 0;
+        wheel2.sign = 0;
+        wheel3.ticks = 0;
+        wheel3.sign = 0;
     }
 
 void refreshPositionControl() {
@@ -93,53 +108,58 @@ void refreshPositionControl() {
         
         if(!commanded) return;
         
-        Serial.println("Refreshing..");
-        if (wheel1_ticks != 0) {
-            Serial.println(abs(wheel1_ticks - enc1.read()));
-            if (abs(wheel1_ticks - enc1.read()) < _TOLERANCE) {
-                    wheel1_ticks = 0;
-                    w1 = true;
-                }  
-        }
-        else 
+        Serial.println("Refreshig...");
+        
+        wheel1.ticks -= enc1.read();
+        enc1.write(0);
+        Serial.println(wheel1.ticks);
+        Serial.println(wheel1.sign);
+        Serial.println(sign(wheel1.ticks));
+        if (sign(wheel1.ticks) != wheel1.sign)
             w1 = true;
-
-        if (wheel2_ticks != 0) {
-            Serial.println(abs(wheel2_ticks - enc2.read()));
-            if (abs(wheel2_ticks - enc2.read()) < _TOLERANCE) {
-                    wheel1_ticks = 0;
-                    w2 = true;
-                }  
-        }
-        else 
+            
+        wheel2.ticks -= enc2.read();
+        enc2.write(0);
+        Serial.println(wheel2.ticks);
+        if (sign(wheel2.ticks) != wheel2.sign)
             w2 = true;
 
-        if (wheel3_ticks != 0) {
-            Serial.println(abs(wheel3_ticks - enc3.read()));
-            if (abs(wheel3_ticks - enc3.read()) < _TOLERANCE) {
-                    wheel3_ticks = 0;
-                    w3 = true;
-                }  
-        }
-        else 
+        wheel3.ticks -= enc3.read();
+        enc3.write(0);
+        Serial.println(wheel3.ticks);
+        if (sign(wheel3.ticks) != wheel3.sign)
             w3 = true;
 
-        if (w1 || w2 || w3) {
-                
-                Stop();
-                commanded = false;
-            }
+        switch (commanded) {
+        
+            case rotation:
+            case lateral:
+                if (w1 || w2 || w3) {
+                        Stop();
+                        commanded = none;
+                 }
+                 break;
+            case forward:
+                if (w1 || w2) {
+                        Stop();
+                        commanded = none;
+                    }
+                break;
+        }
     }
 
 
-void rotate (float angle) {
-        float _speed = angle < 0? -3:3;
+void rotate (float angle, float vel) {
+        float _speed = angle < 0? -abs(vel):abs(vel);
         
         if (commanded) return;
 
-        wheel1_ticks = (int)((-_L/_R)*(angle*_TICKS_REV/360));
-        wheel2_ticks = wheel1_ticks;
-        wheel3_ticks = wheel1_ticks;
+        wheel1.ticks = (int)((-_L/_R)*(angle*_TICKS_REV/360));
+        wheel1.sign = sign(wheel1.ticks);
+        wheel2.ticks = wheel1.ticks;
+        wheel2.sign = wheel1.sign;
+        wheel3.ticks = wheel1.ticks;
+        wheel3.sign = wheel1.sign;
         
         enc1.write(0);
         enc2.write(0);
@@ -147,17 +167,20 @@ void rotate (float angle) {
 
         Go(0,0,_speed);
 
-        commanded = true;
+        commanded = rotation;
     }
 
-void moveAhead(float distance) {
-        float _speed = distance > 0? -1:1;
+void moveForward(float distance,float vel) {
+        float _speed = distance > 0? -abs(vel):abs(vel);
         
         if (commanded) return;
         
-        wheel1_ticks = (int)((_C30/_R)*distance*(_TICKS_REV/_2PI));
-        wheel2_ticks = (int)((-_C30/_R)*distance*(_TICKS_REV/_2PI));
-        wheel3_ticks = 0;
+        wheel1.ticks = (int)((_C30/_R)*distance*(_TICKS_REV/_2PI));
+        wheel1.sign = sign(wheel1.ticks);
+        wheel2.ticks = (int)((-_C30/_R)*distance*(_TICKS_REV/_2PI));
+        wheel2.sign = sign(wheel2.ticks);
+        wheel3.ticks = 0;
+        wheel3.sign = 0;
         
         enc1.write(0);
         enc2.write(0);
@@ -165,28 +188,35 @@ void moveAhead(float distance) {
 
         Go (0,_speed,0);
 
-        commanded = true;
+        commanded = forward;
     }
 
-void moveLateral(float distance) {
+void moveLateral(float distance,float vel) {
     
-        float _speed = distance > 0? 1:-1;
+        float _speed = distance > 0? abs(vel):-abs(vel);
         
         if (commanded) return;
         
-        wheel1_ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
-        wheel2_ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
-        wheel3_ticks = (int)((-1/_R)*distance*(_TICKS_REV/_2PI));
+        wheel1.ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
+        wheel1.sign = sign(wheel1.ticks);
+        wheel2.ticks = (int)((_C60/_R)*distance*(_TICKS_REV/_2PI));
+        wheel2.sign = sign(wheel2.ticks);
+        wheel3.ticks = (int)((-1/_R)*distance*(_TICKS_REV/_2PI));
+        wheel3.sign = sign(wheel3.ticks);
         
         enc1.write(0);
         enc2.write(0);
         enc3.write(0);
 
         Go (_speed,0,0);
-        commanded = true;
+        commanded = lateral;
     }
 
+inline int8_t sign(int x) {
+        if (x == 0) return 0;
+        return (x > 0? 1:-1);
+    }
 
 boolean positionCommanded() {
-        return commanded;
+        return commanded != none;
     }

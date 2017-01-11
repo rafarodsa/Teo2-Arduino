@@ -68,10 +68,5 @@ void setup() {
 
 void loop() {
   timer.update();
-  while (positionCommanded()) {
-    refreshPositionControl();
-  }
-  delay(2000);
-  rotate(360);
 
 }
