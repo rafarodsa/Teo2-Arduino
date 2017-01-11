@@ -23,7 +23,7 @@ Encoder enc3(WHEEL3Y_PIN,WHEEL3W_PIN);
 
 //================== BLOCKING METHODS ============================//
 
-// command a rotation of angle (degrees) and wait till is done.
+// command a rotation of angle (degrees) and wait till is done. Positive angle is counter-clockwise.
 void rotate_wait(float angle) {
         int ticks = (int)((-_L/_R)*(angle*_TICKS_REV/360)); 
         uint8_t _speed = angle < 0? -3:3;
@@ -39,7 +39,7 @@ void rotate_wait(float angle) {
         Stop();
     }
 
-//command a forward translation of distance meters
+//command a forward translation of distance meters. Positive distance is moving ahead.
 void moveForward_wait(float distance) {
         int wheel1, wheel2;
         float _speed = distance > 0? -1:1;
@@ -79,7 +79,7 @@ void moveLateral_wait(float distance) {     // positive distance is movement to 
 
 //===================== NON-BLOCKING METHODS ==========================
 /*
-    When a method is used to command a new position, the "refreshPositionControl" method 
+    When a non-blocking method is used to command a new position, the "refreshPositionControl" method 
     must be used to poll the position of Teo and to ensure that it stops when the commanded
     new position is reached. If not done, Teo will continue to move indefinitely.
 */
@@ -105,6 +105,10 @@ void positionControlInit() {
         wheel2.sign = 0;
         wheel3.ticks = 0;
         wheel3.sign = 0;
+    }
+
+boolean positionCommanded() {
+        return commanded != none;
     }
 
 void refreshPositionControl() {
@@ -146,7 +150,7 @@ void refreshPositionControl() {
         }
     }
 
-
+// command a rotation of angle (degrees) and wait till is done. Positive angle is counter-clockwise.
 void rotate (float angle, float vel) {
         float _speed = angle < 0? -abs(vel):abs(vel);
         
@@ -167,7 +171,7 @@ void rotate (float angle, float vel) {
 
         commanded = rotation;
     }
-
+//command a forward translation of distance meters. Positive distance is moving ahead.
 void moveForward(float distance,float vel) {
         float _speed = distance > 0? -abs(vel):abs(vel);
         
@@ -188,7 +192,8 @@ void moveForward(float distance,float vel) {
 
         commanded = forward;
     }
-
+    
+// positive distance is movement to the right
 void moveLateral(float distance,float vel) {
     
         float _speed = distance > 0? abs(vel):-abs(vel);
@@ -215,6 +220,4 @@ inline int8_t sign(int x) {
         return (x > 0? 1:-1);
     }
 
-boolean positionCommanded() {
-        return commanded != none;
-    }
+
