@@ -19,7 +19,8 @@ void BTCommInit() {
   CommandHandler.addCommand("sad", setSadMood);
   CommandHandler.addCommand("angry", setAngryMood);
   CommandHandler.addCommand("scared", setScaredMood);
-
+  CommandHandler.addCommand("end of sound", endOfSpeech);
+  
   CommandHandler.addDefaultHandler(unrecognized);
 #ifdef BTDEBUG
   BTSerial.println(F("Init!");
@@ -124,4 +125,10 @@ void unrecognized() {
 void serialEvent3() {
   while (BTSerial.available() > 0)
     listenCommand();
+}
+
+void speak(char* phrase) {
+    BTSerial.print("say ");
+    BTSerial.println(phrase);
+    setIsSpeaking(true);
 }

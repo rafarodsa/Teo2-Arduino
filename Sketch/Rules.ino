@@ -1,4 +1,4 @@
-//Here add the functions to verify and ensure the rules that are to always be satisfied
+//Here add the functions to verify and ensure the rules that are to be always satisfied
 
 
 //This avoid moving when the kid is close to Teo. (Safety rule)
