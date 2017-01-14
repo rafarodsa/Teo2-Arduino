@@ -44,7 +44,7 @@ void moveHandler() {
   uint8_t i, j;
 
 #ifdef BTDEBUG
-  BTSerial.pruint8_t(F("move "));
+  BTSerial.print8_t(F("move "));
 #endif
 
   for (i = 0, j = 0; i < 3; i++) {
