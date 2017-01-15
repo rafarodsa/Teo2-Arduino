@@ -3,13 +3,24 @@
 
 typedef boolean _talk2teoIn;
 
+
 enum _talk2teoState {
-        sense, verifyRules, manualExecute, chooseBehavior, behaviorExecute
-    };
+    sense, verifyRules, manualExecute, chooseBehavior, behaviorExecute
+};
 
 _talk2teoState currentState = sense;
-_talk2teoIn behaviorExecuting, commandReceived, commandEnded;
+_talk2teoIn behaviorExecuting, commandReceived, commandEnded, behaviorsOn;
 boolean (*behaviorToExecute)();
+boolean (*commandToExecute)();
+
+
+boolean Talk2TeoInit() {
+    currentState = sense;
+    behaviorExecuting = false;
+    commandedReceived = false;
+    commandEnded = false;
+    behaviorsOn = true;
+}
 
 
 boolean Talk2Teo() {
@@ -44,9 +55,11 @@ boolean Talk2Teo() {
 void talk2teo_sense() {
 
     refreshTeoState();
+    checkManualCommands();
+    timersRefresh();
     
     if (commandReceived && !behaviorExecuting) currentState = manualExecute;
-    else currentState = verifyRules;
+    else if (behaviorsOn) currentState = verifyRules;
 }
 
 void talk2teo_verifyRules() {
@@ -59,8 +72,12 @@ void talk2teo_verifyRules() {
 
 void talk2teo_manualExecute() {
 
+    commandEnded = commandToExecute();      // This function can either be blocking or not. The machine will remain in this state anyway until finished.
     
-    if (commandEnded) currentState = sense;
+    if (commandEnded) {
+        currentState = sense;
+        setCommandReceived(false);
+    }
     else currentState = manualExecute;
 }
 
@@ -70,8 +87,7 @@ void talk2teo_chooseBehavior() {
     
     if (try_look_for_the_child())
         return;
-     
-        
+       
 }
 
 void talk2teo_behaviorExecute() {
@@ -81,6 +97,22 @@ void talk2teo_behaviorExecute() {
     currentState = sense;
 }
 
+void setCommandToExecute(boolean (*commandFunction)()) {
+    commandToExecute = commandFunction;
+}
+
 void setBehaviorToExecute(boolean (*behavior)()) {
-        behaviorToExecute = behavior;
-    }
+    behaviorToExecute = behavior;
+}
+
+void turnOnBehaviors(boolean on) {
+    behaviorsOn = on;
+}
+
+void setCommandReceived(boolean received) {
+    commandReceived = received;
+}
+
+boolean isBehaviorExecuting () {
+    return behaviorExecuting;
+}

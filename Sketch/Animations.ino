@@ -216,3 +216,89 @@ void animateScaredStrips() {
     }
   }
 }
+
+
+// =============== MOOD SETTERS ========================
+
+
+void setIdleMood() {
+#ifdef BTDEBUG
+  BTSerial.println(F("Mood changing to idle..."));
+#endif
+  moodState = idle;
+}
+
+void setHappyMood() {
+#ifdef BTDEBUG
+  BTSerial.println(F("Mood changing to happy..."));
+#endif
+  moodState = happy;
+}
+
+void setSadMood() {
+#ifdef BTDEBUG
+  BTSerial.println(F("Mood changing to sad..."));
+#endif
+  moodState = sad;
+}
+
+void setAngryMood() {
+#ifdef BTDEBUG
+  BTSerial.println(F("Mood changing to angry..."));
+#endif
+  moodState = angry;
+}
+
+void setScaredMood() {
+#ifdef BTDEBUG
+  BTSerial.println(F("Mood changing to scared..."));
+#endif
+  moodState = scared;
+}
+
+//==================== MOOD BEHAVIORS ==================
+
+boolean idleBehavior() {
+    setIdleMood();
+    return true;
+}
+
+boolean sadBehavior() {
+    setSadMood();
+    return true;
+}
+
+boolean angryBehavior() {
+    setAngryMood();
+    return true;
+}
+
+boolean scaredBehavior() {
+    setScaredMood();
+    return true;
+}
+
+boolean happyBehavior() {
+    setHappyMood();
+    return true;
+}
+
+// ==================== TIMER INIT ======================
+
+Timer timer;
+
+void timersInit() {
+  timer.every(3000, animateEyes);
+  timer.every(4000, animateEyelashes);
+  timer.every(4000, animateIdleStrips);
+  timer.every(4000, animateHappyStrips);
+  timer.every(1000, animateSadStrips);
+  timer.every(500, animateAngryStrips);
+  timer.every(500, animateScaredStrips);
+  timer.every(2000, ready);    
+}
+
+void timersRefresh() {
+     timer.update();  
+     
+}

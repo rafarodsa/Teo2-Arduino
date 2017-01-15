@@ -35,7 +35,7 @@
 #define TOPSTRIP_LENGHT 14
 #define BOTTOMSTRIP_LENGHT 31
 
-Timer timer;
+
 
 enum MoodStateEnum {
   idle, happy, sad, angry, scared
@@ -54,18 +54,13 @@ void setup() {
   topStripInit();
   bottomStripInit();
 
-  timer.every(3000, animateEyes);
-  timer.every(4000, animateEyelashes);
-  timer.every(4000, animateIdleStrips);
-  timer.every(4000, animateHappyStrips);
-  timer.every(1000, animateSadStrips);
-  timer.every(500, animateAngryStrips);
-  timer.every(500, animateScaredStrips);
-  timer.every(2000, ready);
-
+  timersInit();
+  Talk2TeoInit();
+  
   positionControlInit();
 }
 
 void loop() {
-  timer.update();
+    Talk2Teo();
+    
 }

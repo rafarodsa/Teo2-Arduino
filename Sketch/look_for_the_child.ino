@@ -16,6 +16,12 @@ boolean try_look_for_the_child() {
             state = Init;
             return true;    
         }
+
+        if (past == Unknown && current == Social) {
+            setBehaviorToExecute(execute_child_returns);
+            state = Init;
+        }
+        
         return false;
     }
 
@@ -61,4 +67,39 @@ boolean execute_look_for_the_child() {
         }
 
         return false;
+    }
+
+
+// 
+
+boolean execute_child_returns () {
+        switch (state) {
+            
+            case Init:
+                setHappyMood();
+                state = MoveLeft;
+                break;
+                
+            case MoveLeft:
+                if (!positionCommanded()) {
+                    rotate(60,3);
+                    speak("Giochi con me?");
+                    state = CheckMovement;
+                    past_state = MoveLeft;
+                }
+                break;
+                
+            case CheckMovement:
+                refreshPositionControl();
+                if (!positionCommanded()) {
+                         state = Finish;
+                 }
+                 break;
+             case Finish:
+                if (!isMoving() && !isTeoSpeaking())
+                    return true;
+                break;
+        }
+
+        return false;        
     }

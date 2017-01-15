@@ -12,6 +12,11 @@ void refreshTeoState() {
         refreshDistanceToPerson();
     }
 
+void checkManualCommands() {
+        while(BTSerial.available() > 0) 
+            listenCommand();
+    }
+
 //==================== DISTANCE RELATED FUNCTIONS =========================
 void refreshDistanceToPerson() {
         distance_to_person = measure_distance();

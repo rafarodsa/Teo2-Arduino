@@ -51,5 +51,20 @@ void Go(float strafe, float forward, float angular) {
 }
 
 boolean isMoving() {
-        return isTeoMoving;
-    }
+    return isTeoMoving;
+}
+
+
+// ======================== MANUAL COMMAND ===============================
+float str,forw,ang;
+
+void setMovementParams(float s, float f, float a) {
+    str = s;
+    forw = f;
+    ang = a;    
+}
+
+boolean executeManualMovement() {
+    Go (str,forw,ang);
+    return true;
+}
