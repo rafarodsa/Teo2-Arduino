@@ -1,11 +1,11 @@
 
 enum InteractionRegion {
-        Intimate, Personal, Social, Public, Unknown 
-    };
+    Intimate, Personal, Social, Public, Unknown 
+};
 
 enum ContactType {
-        hit, hug
-    };
+    hit, hug
+};
     
     
 

@@ -62,5 +62,4 @@ void setup() {
 
 void loop() {
     Talk2Teo();
-    
 }
