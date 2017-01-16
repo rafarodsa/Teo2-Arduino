@@ -1,6 +1,7 @@
 #define EXECUTING   true
 #define EXIT        false
 
+
 typedef boolean _talk2teoIn;
 
 
@@ -20,6 +21,7 @@ boolean Talk2TeoInit() {
     commandReceived = false;
     commandEnded = false;
     behaviorsOn = true;
+    TeoStateInit();
 }
 
 
@@ -63,12 +65,17 @@ void talk2teo_sense() {
         else 
             commandReceived = false;
     }
-    else if (behaviorsOn) currentState = verifyRules;
+    else if (behaviorsOn) 
+      currentState = verifyRules;
+    else {
+      behaviorExecuting = false;
+      currentState = sense;
+    }
 }
 
 void talk2teo_verifyRules() {
 
-    not_move_when_close();      // Verify and ensure the robot does not move when the child's close.
+//    not_move_when_close();      // Verify and ensure the robot does not move when the child's close.
 
     if (behaviorExecuting) currentState = behaviorExecute;
     else currentState = chooseBehavior;

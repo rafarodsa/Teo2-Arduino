@@ -3,26 +3,29 @@
     child' automatic behavior.
 */
 
+
+
 enum lookForTheChildStates {
     Init, MoveLeft, MoveRight, CheckMovement, Finish
 };
     
 lookForTheChildStates state, past_state;
-
+long int _timestamp;
 //Returns true if the conditions are set to execute behavior.
 boolean try_look_for_the_child() {
         InteractionRegion current = getCurrentRegion();
         InteractionRegion past = getPastRegion();
         
-        if (past == Social && current == Unknown) {
+        if (past < Social && current >= Social) {
             setBehaviorToExecute(execute_look_for_the_child);
             state = Init;
             return true;    
         }
 
-        if (past == Unknown && current == Social) {
+        if (past >= Social && current < Social) {
             setBehaviorToExecute(execute_child_returns);
             state = Init;
+            return true;
         }
         
         return false;
@@ -30,16 +33,18 @@ boolean try_look_for_the_child() {
 
 // Returns true when is done executing the behavior
 boolean execute_look_for_the_child() {
+    
     switch (state) {
         
         case Init:
             setSadMood();
+            drawFace();
             state = MoveLeft;
             break;
             
         case MoveLeft:
             if (!positionCommanded()) {
-                rotate(60,3);
+                rotate(60,2);
                 state = CheckMovement;
                 past_state = MoveLeft;
             }
@@ -47,7 +52,7 @@ boolean execute_look_for_the_child() {
             
         case MoveRight:
             if (!positionCommanded()) {
-                rotate(-120,3);
+                rotate(-120,2);
                 speak("Dove sei?");
                 state = CheckMovement;
                 past_state = MoveRight;
@@ -59,8 +64,10 @@ boolean execute_look_for_the_child() {
             if (!positionCommanded()) {
                     if (past_state == MoveLeft)
                         state = MoveRight;
-                     else 
+                     else {  
                         state = Finish;
+                        _timestamp = millis();
+                     }
                 }
              break;
          case Finish:
@@ -76,6 +83,7 @@ boolean execute_look_for_the_child() {
 // 
 
 boolean execute_child_returns () {
+       Serial.println("ChildReturns");
         switch (state) {
             
             case Init:
@@ -86,7 +94,7 @@ boolean execute_child_returns () {
             case MoveLeft:
                 if (!positionCommanded()) {
                     rotate(60,3);
-                    speak("Giochi con me?");
+                    speak("gioca");
                     state = CheckMovement;
                     past_state = MoveLeft;
                 }

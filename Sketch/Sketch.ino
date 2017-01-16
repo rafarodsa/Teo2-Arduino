@@ -1,4 +1,3 @@
-#include <SoftwareSerial.h>
 #include <SerialCommand.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoMatrix.h>
@@ -55,9 +54,10 @@ void setup() {
   bottomStripInit();
 
   timersInit();
-  Talk2TeoInit();
+  
   
   positionControlInit();
+  Talk2TeoInit();
 }
 
 void loop() {

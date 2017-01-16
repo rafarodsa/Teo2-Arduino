@@ -1,20 +1,32 @@
 #include "TeoState.h"
 
-uint16_t distance_to_person;
-InteractionRegion CurrentRegion, PastRegion;
+#define TIMEOUT_SPEAK 5000
+#define TIME_DISTANCE 500
+
+uint32_t distance_to_person, distance_to_person_sum, counter;
+InteractionRegion CurrentRegion = Unknown, PastRegion = Unknown;
 ContactType lastTouch;
 boolean isSpeaking;
 unsigned long inactiveTimeStamp, inactiveTime;
+long int timeStampSpeak, timeStampDistance;
 
 /*
  This function should be call to update the current state of the Teo through its sensors. 
  Here should be added the function calls related to each sensor.
 */
 
+void TeoStateInit() {
+  distance_to_person = 0;
+  distance_to_person_sum = 0;
+  counter = 0;
+  timeStampDistance = millis();
+}
+
 void refreshTeoState() {
     refreshDistanceToPerson();
     checkManualCommands();
     updateInactiveTime();
+    speechTimeout();
 }
 
 void checkManualCommands() {
@@ -24,9 +36,21 @@ void checkManualCommands() {
 
 //==================== DISTANCE RELATED FUNCTIONS =========================
 void refreshDistanceToPerson() {
-    distance_to_person = measure_distance();
-    PastRegion = CurrentRegion;         //TODO: Check if this is right 
-    CurrentRegion = determineInteractionRegion(distance_to_person);
+
+    if (millis()-timeStampDistance < TIME_DISTANCE) {
+         
+         distance_to_person_sum += measure_distance();
+         counter++;
+
+    }
+    else {
+      distance_to_person = distance_to_person_sum/counter;
+      counter = 0;
+      distance_to_person_sum = 0;
+      timeStampDistance = millis();
+      PastRegion = CurrentRegion;         //TODO: Check if this is right 
+      CurrentRegion = determineInteractionRegion(distance_to_person);
+    }
 }
 
 uint16_t distanceToPerson() {
@@ -55,6 +79,7 @@ uint8_t getPastRegion() {
 
 void resetInactiveTimeCounter() {
     inactiveTimeStamp = millis();
+    inactiveTime = 0;
 }
 
 void updateInactiveTime () {
@@ -72,8 +97,14 @@ void endOfSpeech() {
 }
 
 void setIsSpeaking(boolean x) {
-    isSpeaking = true;
+    timeStampSpeak = millis();
+    isSpeaking = x;
 }
 boolean isTeoSpeaking() {
     return isSpeaking;
+}
+
+void speechTimeout() {
+    if (millis() - timeStampSpeak > TIMEOUT_SPEAK)
+      endOfSpeech(); 
 }

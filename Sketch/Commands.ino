@@ -22,7 +22,7 @@ void BTCommInit() {
   CommandHandler.addCommand("angry", angryMoodHandler);
   CommandHandler.addCommand("scared", scaredMoodHandler);
   CommandHandler.addCommand("auto", activateBehaviors);
-  CommandHandler.addCommand("end of sound", endOfSpeech);
+  CommandHandler.addCommand("endofsound", endOfSpeech);
   
   CommandHandler.addDefaultHandler(unrecognized);
 #ifdef BTDEBUG
@@ -47,10 +47,12 @@ void activateBehaviors () {
     char* args;
     args = CommandHandler.next();
     if (args != NULL){
-        if (strcmp("on",args) == 0) 
+        if (strcmp("on",args) == 0){
             turnOnBehaviors(true);
-        else 
+        }
+        else if (strcmp("off",args) == 0) {
             turnOnBehaviors(false);
+        }
     }
             
 }
@@ -91,6 +93,7 @@ void happyMoodHandler() {
 }
 
 void sadMoodHandler() {
+     
      setCommandReceived(true);
      setCommandToExecute(sadBehavior);  
 }
