@@ -109,7 +109,12 @@ void positionControlInit() {
 
 boolean positionCommanded() {
         return commanded != none;
-    }
+}
+
+void stop_position_control() {
+  Stop();
+  commanded = none;
+}
 
 void refreshPositionControl() {
         boolean w1 = false, w2 = false, w3 = false;
