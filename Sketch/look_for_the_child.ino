@@ -17,11 +17,6 @@ boolean childLeft = false;
 boolean try_look_for_the_child() {
         InteractionRegion current = getCurrentRegion();
         InteractionRegion past = getPastRegion();
-
-        Serial.println("Past:");
-        Serial.println(past);
-        Serial.println("Current:");
-        Serial.println(current);
         
         if (past <= Social && current > Social) {
             setBehaviorToExecute(execute_look_for_the_child);
@@ -44,7 +39,6 @@ boolean try_look_for_the_child() {
 // Returns true when is done executing the behavior
 boolean execute_look_for_the_child() {
 
-    
     switch (state) {
 
         case CheckTime:
@@ -57,6 +51,7 @@ boolean execute_look_for_the_child() {
             else 
               state = Init;
           break;
+
         case Init:
             setSadMood();
             drawFace();
@@ -96,7 +91,6 @@ boolean execute_look_for_the_child() {
             break;
     }
 
-    
     if (getCurrentRegion() < Social) {
        stop_position_control();
        setHappyMood();
@@ -105,9 +99,6 @@ boolean execute_look_for_the_child() {
 
     return false;
 }
-
-
-// 
 
 boolean execute_child_returns () {
         childLeft = false;
@@ -122,6 +113,7 @@ boolean execute_child_returns () {
                 else 
                   state = Init;
                 break;
+
             case Init:
                 setHappyMood();
                 state = MoveLeft;
